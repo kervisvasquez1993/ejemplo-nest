@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class CarsService {
     private cars = [
-        { id: 1, name: "Toyota" },
-        { id: 2, name: "Honda" },
-        { id: 3, name: "Jeeper" }
+        { id: 1, brand: "Toyota", model : "carro1" },
+        { id: 2, brand: "Honda" , model : "honda1" },
+        { id: 3, brand: "Jeeper", model : "jeeper1" },
     ]
 
     public findAll() {
@@ -13,7 +13,15 @@ export class CarsService {
     }
 
     public findOneById(id: number) {
-        const response = this.cars.find(car => car.id == id)
-        return response
+        const car = this.cars.find(car => car.id === id)
+        if (!car) throw new NotFoundException(`Car with id ${id} not found`);
+        return car
+    }
+
+    public createCar(){
+        return {
+            ok :  true,
+            method : "post"
+        }
     }
 }
