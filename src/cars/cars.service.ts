@@ -45,7 +45,18 @@ export class CarsService {
             }
             return car
         })
-
         return carDB
+    }
+
+    public delete(id: string) {
+        // return `${id} - eliminado}`
+        this.findOneById(id)
+        this.cars = this.cars.filter(car => car.id !== id);
+        return {
+            status : "ok",
+            mensaje : `el ID ${id} fue eliminado de forma exitosa`
+        }
+
+
     }
 }
