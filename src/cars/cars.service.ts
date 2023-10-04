@@ -32,10 +32,20 @@ export class CarsService {
         return car;
     }
 
-    public updateCar(id: string, body: UpdateCarDto) {
-        const car = this.cars.find(car => car.id === id)
-        if (!car) throw new NotFoundException(`Car with id ${id} not found`);
-        
-        return body
+    public updateCar(id: string, updateCarDto: UpdateCarDto) {
+        let carDB = this.findOneById(id);
+        this.cars = this.cars.map(car => {
+            if (car.id === id) {
+                carDB = {
+                    ...carDB,
+                    ...updateCarDto,
+                    id
+                }
+                return carDB
+            }
+            return car
+        })
+
+        return carDB
     }
 }
